@@ -66,6 +66,11 @@ cache:
     - $HOME/.android/build-cache
 
 addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - libstdc++-4.9-dev
   coverity_scan:
     project:
       name: "AsimIsaacov/coverityTest"
