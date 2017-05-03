@@ -39,7 +39,7 @@ before_script:
   - chmod +x ./gradlew
 
 script:
-  - ./gradlew assembleRelease --stacktrace
+  - ./gradlew build --stacktrace
 
 addons:
   coverity_scan:
