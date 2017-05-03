@@ -18,3 +18,22 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     - addon-google_apis-google-25
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "WOMcS0yr1E6oymSHcR/4OnWeU3DeMOr/hXMFvFpeDyodTjLyeyQCz9gsjeXgg8MwbPFhnqKQhvOiG4XZJn5WOsR0AxpPbNE7cfU2o8L88vIjfy1FUK2LrQUNppM64jbnHHXMrkK8MSpu/HSuiMpWlcbxePWT8f5VzvygET32OPQzTBeqk16xAGBtUPkbIJTExhV0chRF/u84xIl7bbRGzjztGCq+J808K01xUoCMM1Cx82I0H88R84fv9rHyruld+TaFyq/R8hltEKi+Mqkb5VOGJwylZUvM0pJbEpJ7ItjuQs/++gs9qRpo48tvbAeVPcATZZ1mM1sjiEYuFMxwNfd7ABaiS4e5ul0cURkRtb8/acri5C7ICG+i1K7HfjQH6egEmHHwW6TvVQBYD81KA3n5vtURuGETp+zCNIj94hrS6O3fwL1qoUfVy+jTyXq9BL2ah8NDOU/9KxwkwJvWsbj4lyf6E8O/cfkhHVOo3OmfiOXJbSw88uOBcrxE8tKpSw5lYhgWZAOrmkIJ+egK62EKm+ig3It7ZvC3Y5N7r+lZ+9awP2gY1aIpVUjqHo2u2VyFLCQtb72eJ6EfKMhQ6TjaMjt0icotys5Xu2OwEwGrUdilIjay/SdWrogRZPUXRPdKhcViKmVpX715Y/Q7QdXDLCZqBHNCRsNuGFvHAV4="
+
+before_install:
+      - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
+addons:
+  coverity_scan:
+    project:
+      name: "AsimIsaacov/coverityTest"
+      description: "Build submitted via Travis CI"
+    notification_email: asisasgard@gmail.com
+    build_command_prepend: "./gradlew clean"
+    build_command: "./gradlew build"
+    branch_pattern: coverity_scan
