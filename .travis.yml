@@ -39,10 +39,13 @@ env:
    - ANDROID_TARGET=android-25
    - ANDROID_ABI=armeabi-v7a
    - ANDROID_TOOLS_URL="https://dl.google.com/android/repository/tools_r25.2.3-linux.zip"
-   - ANDROID_NDK_HOME="$ANDROID_HOME/ndk-bundle"
+   # - ANDROID_NDK_HOME="/usr/local/ndk-bundle"
    - secure: "WOMcS0yr1E6oymSHcR/4OnWeU3DeMOr/hXMFvFpeDyodTjLyeyQCz9gsjeXgg8MwbPFhnqKQhvOiG4XZJn5WOsR0AxpPbNE7cfU2o8L88vIjfy1FUK2LrQUNppM64jbnHHXMrkK8MSpu/HSuiMpWlcbxePWT8f5VzvygET32OPQzTBeqk16xAGBtUPkbIJTExhV0chRF/u84xIl7bbRGzjztGCq+J808K01xUoCMM1Cx82I0H88R84fv9rHyruld+TaFyq/R8hltEKi+Mqkb5VOGJwylZUvM0pJbEpJ7ItjuQs/++gs9qRpo48tvbAeVPcATZZ1mM1sjiEYuFMxwNfd7ABaiS4e5ul0cURkRtb8/acri5C7ICG+i1K7HfjQH6egEmHHwW6TvVQBYD81KA3n5vtURuGETp+zCNIj94hrS6O3fwL1qoUfVy+jTyXq9BL2ah8NDOU/9KxwkwJvWsbj4lyf6E8O/cfkhHVOo3OmfiOXJbSw88uOBcrxE8tKpSw5lYhgWZAOrmkIJ+egK62EKm+ig3It7ZvC3Y5N7r+lZ+9awP2gY1aIpVUjqHo2u2VyFLCQtb72eJ6EfKMhQ6TjaMjt0icotys5Xu2OwEwGrUdilIjay/SdWrogRZPUXRPdKhcViKmVpX715Y/Q7QdXDLCZqBHNCRsNuGFvHAV4="
 
 before_install:
+  - git clone https://github.com/urho3d/android-ndk.git $HOME/android-ndk-root
+  - export ANDROID_NDK_HOME=$HOME/android-ndk-root
+  - echo "ndk.dir=$ANDROID_NDK_HOME" > local.properties
   - mkdir "$ANDROID_HOME/licenses" || true
   - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
   - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
