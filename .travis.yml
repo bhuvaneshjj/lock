@@ -74,6 +74,7 @@ addons:
   coverity_scan:
     project:
       name: "AsimIsaacov/coverityTest"
+      version: 0.1
       description: "Build submitted via Travis CI"
     notification_email: asisasgard@gmail.com
     build_command_prepend: "./gradlew clean"
