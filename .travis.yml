@@ -35,7 +35,6 @@ env:
    - TERM=dumb
    
   global:
-   - GRADLE_OPTS="-Xms128m"
    # General Android settings used in builds
    - ANDROID_TARGET=android-25
    - ANDROID_ABI=armeabi-v7a
