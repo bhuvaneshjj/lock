@@ -28,19 +28,24 @@ android:
     - 'google-gdk-license-.+'
 
 env:
-  global:
+  matrix:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
    #   via the "travis encrypt" command using the project repo's public key
    # Initiating clean Gradle output
    - TERM=dumb
+   
+  global:
+   - GRADLE_OPTS="-Xms128m"
    # General Android settings used in builds
    - ANDROID_TARGET=android-25
    - ANDROID_ABI=armeabi-v7a
    - ANDROID_TOOLS_URL="https://dl.google.com/android/repository/tools_r25.2.3-linux.zip"
    # - ANDROID_NDK_HOME="/usr/local/ndk-bundle"
    - secure: "WOMcS0yr1E6oymSHcR/4OnWeU3DeMOr/hXMFvFpeDyodTjLyeyQCz9gsjeXgg8MwbPFhnqKQhvOiG4XZJn5WOsR0AxpPbNE7cfU2o8L88vIjfy1FUK2LrQUNppM64jbnHHXMrkK8MSpu/HSuiMpWlcbxePWT8f5VzvygET32OPQzTBeqk16xAGBtUPkbIJTExhV0chRF/u84xIl7bbRGzjztGCq+J808K01xUoCMM1Cx82I0H88R84fv9rHyruld+TaFyq/R8hltEKi+Mqkb5VOGJwylZUvM0pJbEpJ7ItjuQs/++gs9qRpo48tvbAeVPcATZZ1mM1sjiEYuFMxwNfd7ABaiS4e5ul0cURkRtb8/acri5C7ICG+i1K7HfjQH6egEmHHwW6TvVQBYD81KA3n5vtURuGETp+zCNIj94hrS6O3fwL1qoUfVy+jTyXq9BL2ah8NDOU/9KxwkwJvWsbj4lyf6E8O/cfkhHVOo3OmfiOXJbSw88uOBcrxE8tKpSw5lYhgWZAOrmkIJ+egK62EKm+ig3It7ZvC3Y5N7r+lZ+9awP2gY1aIpVUjqHo2u2VyFLCQtb72eJ6EfKMhQ6TjaMjt0icotys5Xu2OwEwGrUdilIjay/SdWrogRZPUXRPdKhcViKmVpX715Y/Q7QdXDLCZqBHNCRsNuGFvHAV4="
+   - secure: "GyS2+/Sgar4oLwSzYZNkxr2uDDZifWWWBwB2YlU19g4d7N+8PVLuNAjcIKCdQVB8RNlwFM8+kiIkr9NIgbn9wpG63vTIutqvB/aiJCXh2ShAZG195N1c9a0Ht5pUDr7TVt85Cn2qN9b4aM+rXax2uFNjNdv1oqbpEkBKNASjrFVPkWYF7yJSC5Hg7xCbAseOGlCpQVeZR9Y477LhC5eq7WGVTmddIE4HyFUTzKmWaaTblSDFpBzkxl8e7Ikp27R+cZqj3n0a1LR6bS6Lq8P9fGovtTstTdu/1nhG0UZ2WCgtsSANrwDDlHzhSJrWB91hAUHwtXUNNGG6MG67Mfy5KacpR/9OEjBdFcKmvy+WBdu4AIZoinQ0fw9UzIbMKRrLat4f6vi9+51JAqgKCfFggnZhGpUWdEkNeTfQ8rPtot086dOMeLDbH77gdOv7jfmn2xO1tciQX6wGPbvwNWmgZXIfjn5a+syOOv77TR0gkiHaerxBT2zRAB7lUETfH/4ZCGtWsMSp1PCZNGj7aSiM6UUjm2i9kTu9mIEM35saL6g5v7dnpv3YkhDUuS66pDpeh5jd3P5zY1di/mBsoJ+GZT+AKhDiGuOEb4oHFOkbZQKA1O2AXtvsvrLLE7aBFh/sP1nUXjaR0E6tnalRjs1Z0ytg+vbR2E2eYB5ca0Y4pD8="
 
 before_install:
+  - chmod +x ./gradlew
   - git clone https://github.com/urho3d/android-ndk.git $HOME/android-ndk-root
   - export ANDROID_NDK_HOME=$HOME/android-ndk-root
   - echo "ndk.dir=$ANDROID_NDK_HOME" > local.properties
@@ -49,8 +54,8 @@ before_install:
   - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
   - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 
-before_script:
-  - chmod +x ./gradlew
+script:
+  - ./gradlew build
 
 after_script:
   - cat ./cov-int/build-log.txt
@@ -77,5 +82,5 @@ addons:
       description: Build submitted via Travis CI
     notification_email: asisasgard@gmail.com
     build_command_prepend: ./gradlew clean
-    build_command: ./gradlew --no-daemon --info build
+    build_command: ./gradlew build
     branch_pattern: coverity_scan
