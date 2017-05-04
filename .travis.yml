@@ -54,8 +54,8 @@ before_install:
 before_script:
   - chmod +x ./gradlew
 
-script:
-  - ./gradlew build
+after_script:
+  - cat ./cov-int/build-log.txt
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -79,5 +79,5 @@ addons:
       description: "Build submitted via Travis CI"
     notification_email: asisasgard@gmail.com
     build_command_prepend: "./gradlew clean"
-    build_command: "./gradlew build"
-    branch_pattern: master
+    build_command: "./gradlew --no-daemon --info build"
+    branch_pattern: coverity_scan
