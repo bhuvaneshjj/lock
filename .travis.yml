@@ -81,5 +81,5 @@ addons:
       description: Build submitted via Travis CI
     notification_email: asisasgard@gmail.com
     build_command_prepend: ./gradlew clean
-    build_command: ./gradlew build
+    build_command: ./gradlew --no-daemon --info build
     branch_pattern: coverity_scan
